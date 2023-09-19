@@ -10,11 +10,11 @@ using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    internal class DapperContext
+    internal class DictionaryDpContext
     {
         private readonly string? _connectionString;
 
-        public DapperContext(IConfiguration configuration)
+        public DictionaryDpContext(IConfiguration configuration)
         {
             _connectionString = configuration.GetConnectionString("DapperConnectionString");
         }

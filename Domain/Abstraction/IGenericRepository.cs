@@ -9,7 +9,6 @@ namespace Domain.Abstraction
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
-        Task<int> AddAsync(TEntity entity);
         Task<TEntity> GetById(int id);
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<IEnumerable<T>> CustomQueryAsync<T>();

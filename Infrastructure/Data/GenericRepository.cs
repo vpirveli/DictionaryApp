@@ -22,7 +22,7 @@ namespace Infrastructure.Data
 
         public Task<int> AddAsync(TEntity entity)
         {
-            _connection.
+            
         }
 
         public Task<IEnumerable<TEntity>> CustomQueryAsync<TEntity>()
