@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Abstraction
 {
-    internal interface IGenericRepository<TEntity> where TEntity : class
+    public interface IGenericRepository<TEntity> where TEntity : class
     {
         Task<int> AddWordAsync(Word word);
         Task<Word> GetWordByIdAsync(int id);

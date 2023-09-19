@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Npgsql;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -14,7 +16,9 @@ namespace Infrastructure
 
         public DapperContext(IConfiguration configuration)
         {
-            _connectionString = 
+            _connectionString = configuration.GetConnectionString("DapperConnectionString");
         }
+
+        public IDbConnection CreateConnection => new NpgsqlConnection(_connectionString);
     }
 }

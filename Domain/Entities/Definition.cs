@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    internal class Definitions
+    public class Definition
     {
+        public Guid Id { get; set; }
+        public string Description { get; set; }
     }
 }
