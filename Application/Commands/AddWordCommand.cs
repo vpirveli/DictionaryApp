@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands
 {
-    internal class AddWordCommand:IRequest<int>
+    internal class AddWordCommand : IRequest<int>
     {
         public string Term { get; set; }
     }
