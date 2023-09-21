@@ -1,6 +1,5 @@
 using Application;
 using Infrastructure;
-using Presentation;
 
 namespace WebApi
 {
@@ -20,8 +19,7 @@ namespace WebApi
             //Dependency Injection
             builder.Services
                 .AddApplication()
-                .AddInfrastructure()
-                .AddPresentation();
+                .AddInfrastructure(builder.Configuration);
 
             var app = builder.Build();
 

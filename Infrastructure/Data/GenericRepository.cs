@@ -11,18 +11,13 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    internal class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
     {
         IDbConnection _connection;
 
         public GenericRepository(IDbConnection connection)
         {
             _connection = connection;
-        }
-
-        public Task<int> AddAsync(TEntity entity)
-        {
-            
         }
 
         public Task<IEnumerable<TEntity>> CustomQueryAsync<TEntity>()

@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace Infrastructure
 {
-    internal class DictionaryDbContext : DbContext
+    public class DictionaryDbContext : DbContext
     {
         public DictionaryDbContext(DbContextOptions<DictionaryDbContext> options) : base(options) { }
 
-        public DbSet<string> Word { get; set; }
-        public DbSet<string> Definition { get; set; }
+        public virtual DbSet<string> Word { get; set; }
+        public virtual DbSet<string> Definition { get; set; }
+
+
     }
 }
