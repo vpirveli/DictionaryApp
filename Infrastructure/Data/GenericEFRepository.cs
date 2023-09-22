@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Infrastructure.Data
 {
-    internal class GenericEFRepository<TEntity> : IGenericEFRepository<TEntity> where TEntity : class
+    public class GenericEFRepository<TEntity> : IGenericEFRepository<TEntity> where TEntity : class
     {
         DictionaryDbContext _dbContext;
 

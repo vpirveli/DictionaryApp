@@ -18,7 +18,7 @@ namespace Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<DictionaryDpContext>();
-            services.AddSingleton<DictionaryDbContext>();
+            services.AddScoped<DictionaryDbContext>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddDbContext(configuration);
 

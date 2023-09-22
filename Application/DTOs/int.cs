@@ -1,15 +1,12 @@
-﻿using Application.DTOs;
-using Domain.Entities;
-using MediatR;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Commands
+namespace Application.DTOs
 {
-    public class AddWordCommand : IRequest<int>
+    public class @int
     {
         public string Term { get; set; }
     }

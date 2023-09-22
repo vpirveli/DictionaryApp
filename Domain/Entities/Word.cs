@@ -10,6 +10,7 @@ namespace Domain.Entities
     {
         public Guid Id { get; set; }
         public string Term { get; set; }
-        public List<Definition> Definitions{ get; set; }
+        public DateTime Date { get; set; }
+        public List<int> DefinitionIds{ get; set; }
     }
 }
