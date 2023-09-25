@@ -9,6 +9,6 @@ namespace Application.Interfaces
 {
     public interface IRequestHandler<TRequest, TResult> where TRequest : IRequest<TResult>
     {
-        Task<TResult> Handle(TRequest request, CancellationToken token);
+        Task<TResult> Handle(TRequest command, CancellationToken token);
     }
 }

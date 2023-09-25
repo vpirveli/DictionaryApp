@@ -26,14 +26,29 @@ namespace Infrastructure.Data
         }
 
 
-        public async Task<TEntity> GetById(int id)
+        public async Task<TEntity> GetById(Guid id)
         {
-            return await _connection.QuerySingleOrDefaultAsync<TEntity>("SELECT * FROM " + typeof(TEntity).Name + " WHERE Id = @Id", new { Id = id });
+            var task = await _connection.QuerySingleOrDefaultAsync<TEntity>("SELECT * FROM " + typeof(TEntity).Name + " WHERE Id = @Id", new { Id = id });
+
+            if (task == null)
+            {
+                // Handle the case where no entity with the given id was found.
+                // You can return null or throw an exception, depending on your requirements.
+                // For example, you can throw a custom NotFoundException:
+                throw new ArgumentOutOfRangeException($"Entity with Id {id} not found.");
+            }
+
+            return task;
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync()
         {
             return await _connection.QueryAsync<TEntity>("SELECT * FROM " + typeof(TEntity).Name);
+        }
+
+        public async Task<TEntity> GetByDescription(string description)
+        {
+            return await _connection.QuerySingleOrDefaultAsync<TEntity>("SELECT * FROM " + typeof(TEntity).Name + " WHERE Description = @description", new { description = description });
         }
     }
 }

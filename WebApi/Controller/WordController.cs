@@ -1,4 +1,6 @@
 ﻿using Application.Commands;
+using Application.DTOs;
+using Application.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,18 +28,19 @@ namespace WebApi.Controller
         }
 
         // GET api/<WordController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("GetWordById")]
+        public async Task<WordDTO> Get([FromQuery] GetWordQuery query)
         {
-            return "value";
+            WordDTO wordDto = await _mediator.Send(query);
+            return wordDto;
         }
 
         // POST api/<WordController>
-        [HttpPost]
-        public async ActionResult Post(AddWordCommand command)
+        [HttpPost("AddWordAsync")]
+        public async Task<IActionResult> AddWordAsync(AddWordCommand command)
         {
-            await _mediator.Send(command);
-            return Ok();
+            Guid id = await _mediator.Send(command);
+            return Ok(id);
         }
 
         // PUT api/<WordController>/5

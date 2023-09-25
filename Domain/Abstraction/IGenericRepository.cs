@@ -9,8 +9,9 @@ namespace Domain.Abstraction
 {
     public interface IGenericRepository<TEntity> where TEntity : class
     {
-        Task<TEntity> GetById(int id);
+        Task<TEntity> GetById(Guid id);
         Task<IEnumerable<TEntity>> GetAllAsync();
         Task<IEnumerable<T>> CustomQueryAsync<T>();
+        Task<TEntity> GetByDescription(string description);
     }
 }

@@ -23,6 +23,8 @@ namespace WebApi
                 .AddApplication()
                 .AddInfrastructure(builder.Configuration);
 
+            builder.Services.AddControllers();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -31,10 +33,12 @@ namespace WebApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
-
+            
             app.UseHttpsRedirection();
 
             app.UseAuthorization();
+
+            app.MapControllers();
 
             app.Run();
         }

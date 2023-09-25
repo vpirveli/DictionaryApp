@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers
 {
-    public class AddWordHandler : IRequestHandler<AddWordCommand, int>
+    public class AddWordHandler : MediatR.IRequestHandler<AddWordCommand, Guid>
     {
         private IGenericEFRepository<Word> _repository;
 
@@ -21,13 +21,15 @@ namespace Application.Handlers
             _repository = repository;
         }
 
-        public async Task<int> Handle(AddWordCommand request, CancellationToken token)
+        public async Task<Guid> Handle(AddWordCommand request, CancellationToken token)
         {
-            Word word = new Word() { Term = request.Term , Date = DateTime.Now};
+            Word word = new Word() { Term = request.Term};
+
+            word.Definition = new List<Definition> { new Definition() { Description = request.Description } };
 
             await _repository.AddAsync(word);
 
-            return Convert.ToInt32(word.Id);
+            return word.Id;
         }
     }
 }

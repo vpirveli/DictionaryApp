@@ -1,5 +1,4 @@
-﻿using Application.DTOs;
-using Domain.Entities;
+﻿using Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -9,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace Application.Queries
 {
-    public class GetWordQuery:IRequest<WordDTO>
+    public class GetDefinitionQuery : IRequest<Definition>
     {
-        public Guid WordId { get; set; } 
+        public string Definition { get; set; } 
     }
 }
