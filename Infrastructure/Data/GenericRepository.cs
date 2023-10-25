@@ -1,54 +1,55 @@
-﻿using Dapper;
-using Domain.Abstraction;
-using Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Common;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Infrastructure.Data;
 
-namespace Infrastructure.Data
+public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : class
+    IDbConnection _connection;
+    private readonly string tableName;
+    public GenericRepository(IDbConnection connection)
     {
-        IDbConnection _connection;
+        _connection = connection;
+        tableName = typeof(TEntity).Name;
+    }
 
-        public GenericRepository(IDbConnection connection)
-        {
-            _connection = connection;
-        }
-
-        public Task<IEnumerable<TEntity>> CustomQueryAsync<TEntity>()
-        {
-            throw new NotImplementedException();
-        }
+    public Task<IEnumerable<TEntity>> CustomQueryAsync()
+    {
+        throw new NotImplementedException();
+    }
 
 
-        public async Task<TEntity> GetById(Guid id)
-        {
-            var task = await _connection.QuerySingleOrDefaultAsync<TEntity>("SELECT * FROM " + typeof(TEntity).Name + " WHERE Id = @Id", new { Id = id });
+    public async Task<TEntity> GetById(Guid id)
+    {
+        string query = $"SELECT * FROM {tableName} WHERE id = @id";
 
-            if (task == null)
-            {
-                // Handle the case where no entity with the given id was found.
-                // You can return null or throw an exception, depending on your requirements.
-                // For example, you can throw a custom NotFoundException:
-                throw new ArgumentOutOfRangeException($"Entity with Id {id} not found.");
-            }
+        var result = await _connection.QuerySingleOrDefaultAsync<TEntity>(query, new { id });
 
-            return task;
-        }
+        return result;
+    }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync()
-        {
-            return await _connection.QueryAsync<TEntity>("SELECT * FROM " + typeof(TEntity).Name);
-        }
+    public async Task<IEnumerable<TEntity>> GetAllAsync()
+    {
+        var query = $"SELECT * FROM {tableName}";
 
-        public async Task<TEntity> GetByDescription(string description)
-        {
-            return await _connection.QuerySingleOrDefaultAsync<TEntity>("SELECT * FROM " + typeof(TEntity).Name + " WHERE Description = @description", new { description = description });
-        }
+        return await _connection.QueryAsync<TEntity>(query);
+    }
+
+    public async Task<TEntity> GetByDescription(string description)
+    {
+        var query = $"SELECT * FROM {tableName} WHERE Description = @description";
+        return await _connection.QuerySingleOrDefaultAsync<TEntity>(query, new { description });
+    }
+
+    public async Task<IEnumerable<TEntity>> GetAllByForeignKeyAsync(Guid id, string? propertyName)
+    {
+        var query = $"SELECT * FROM {tableName} WHERE {propertyName} = @id";
+
+        var result = await _connection.QueryAsync<TEntity>(query, new { id });
+
+        return result;
+    }
+
+    public async Task<TEntity> GetByPropertyValue(string term)
+    {
+        var query = $"SELECT * FROM {tableName} WHERE term = @term";
+        return await _connection.QuerySingleOrDefaultAsync<TEntity>(query, new { term });
     }
 }

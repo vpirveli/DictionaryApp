@@ -8,14 +8,19 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
+    [Table("word")]
     public class Word
     {
-        public Word(){}
+        public Word() { }
 
         [Key]
+        [Column("id")]
         public Guid Id { get; set; }
         [MaxLength(255)]
+        [Column("term")]
         public string Term { get; set; }
+
+        [Column("date")]
         public DateTime Date { get; set; } = DateTime.UtcNow;
         public virtual List<Definition> Definition{ get; set; }
     }

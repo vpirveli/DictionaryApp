@@ -10,6 +10,6 @@ namespace Application.DTOs
     public class WordDTO
     {
         public string Term { get; set; }
-        public List<string> Definition { get; set; }
+        public List<string> Description { get; set; }
     }
 }

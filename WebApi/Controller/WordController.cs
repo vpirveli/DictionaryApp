@@ -14,22 +14,24 @@ namespace WebApi.Controller
     {
         private IMediator _mediator;
 
-        public WordController(IMediator mediator)
-        {
-            _mediator = mediator;
-        }
+        public WordController(IMediator mediator) => _mediator = mediator;
+
 
 
         // GET: api/<WordController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<string> Get() => new string[] {" "};
+
+        [HttpGet("GetWordByTerm")]
+        public async Task<WordDTO> GetById([FromQuery] GetWordByTermQuery query)
         {
-            return new string[] { "value1", "value2" };
+            WordDTO wordDto = await _mediator.Send(query);
+            return wordDto;
         }
 
         // GET api/<WordController>/5
         [HttpGet("GetWordById")]
-        public async Task<WordDTO> Get([FromQuery] GetWordQuery query)
+        public async Task<WordDTO> GetById([FromQuery] GetWordByIdQuery query)
         {
             WordDTO wordDto = await _mediator.Send(query);
             return wordDto;
@@ -37,9 +39,9 @@ namespace WebApi.Controller
 
         // POST api/<WordController>
         [HttpPost("AddWordAsync")]
-        public async Task<IActionResult> AddWordAsync(AddWordCommand command)
+        public async Task<IActionResult> AddWordAsync(AddWordCommand command, CancellationToken token)
         {
-            Guid id = await _mediator.Send(command);
+            Guid id = await _mediator.Send(command, token);
             return Ok(id);
         }
 
@@ -50,9 +52,11 @@ namespace WebApi.Controller
         }
 
         // DELETE api/<WordController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(DeleteWordByIdCommand query)
         {
+            Guid id = await _mediator.Send(query);
+            return Ok(id);
         }
     }
 }

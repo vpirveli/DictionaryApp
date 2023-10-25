@@ -1,8 +1,7 @@
-﻿using Application.Interfaces;
+﻿using MediatR;
 using Application.Queries;
 using Domain.Abstraction;
 using Domain.Entities;
-using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Application.Handlers
 {
-    public class GetDefinitionHandler : Interfaces.IRequestHandler<GetDefinitionQuery, Definition>
+    public class GetDefinitionHandler : IRequestHandler<GetDefinitionQuery, Definition>
     {
         private IGenericRepository<Definition> _repository;
 
@@ -19,7 +18,6 @@ namespace Application.Handlers
         {
             _repository = repository;
         }
-
 
         public async Task<Definition> Handle(GetDefinitionQuery request, CancellationToken token)
         {
